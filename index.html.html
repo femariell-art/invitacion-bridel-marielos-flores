@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bridal Shower - Marielos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Tipografías similares a la invitación original -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para iconos elegantes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        script: ['"Alex Brush"', 'cursive'],
+                        serif: ['"Lora"', '"Cormorant Garamond"', 'serif'],
+                        display: ['"Cormorant Garamond"', 'serif'],
+                    },
+                    colors: {
+                        ribbon: '#F6E8E8',
+                        ink: '#2D2A2E',
+                        lavenderBg: '#F4F2F8',
+                        petalPink: '#F4B8C8',
+                        petalPurple: '#C3B1E1',
+                        petalYellow: '#FCE694',
+                        petalBlue: '#A7C7E7',
+                        sageLeaf: '#7D9D74',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fondo fiel a la imagen: rayas verticales lavanda muy pálido y textura papel acuarela */
+        body {
+            background-color: #FAF9FC;
+            background-image: 
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(232, 228, 240, 0.45) 0px,
+                    rgba(232, 228, 240, 0.45) 18px,
+                    rgba(255, 255, 255, 0.9) 18px,
+                    rgba(255, 255, 255, 0.9) 38px
+                );
+            color: #2D2A2E;
+            overflow-x: hidden;
+        }
+
+        /* Óvalo central sutil de acuarela */
+        .watercolor-oval {
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.96) 55%, rgba(235, 231, 242, 0.55) 73%, rgba(255,255,255,0) 76%);
+            border: 2px solid rgba(226, 221, 235, 0.65);
+            box-shadow: inset 0 0 30px rgba(230, 225, 240, 0.4);
+        }
+
+        /* Cinta superior con recortes en cola de golondrina */
+        .ribbon-banner {
+            background-color: #F5E6E8;
+            position: relative;
+            clip-path: polygon(0% 0%, 100% 0%, 96% 50%, 100% 100%, 0% 100%, 4% 50%);
+        }
+
+        /* Animación de aleteo de mariposas */
+        @keyframes flutterLeft {
+            0%, 100% { transform: translateY(0) rotate(-8deg) scaleX(1); }
+            25% { transform: translateY(-6px) rotate(-4deg) scaleX(0.75); }
+            50% { transform: translateY(-10px) rotate(-10deg) scaleX(1); }
+            75% { transform: translateY(-4px) rotate(-5deg) scaleX(0.8); }
+        }
+
+        @keyframes flutterRight {
+            0%, 100% { transform: translateY(0) rotate(6deg) scaleX(1); }
+            30% { transform: translateY(-8px) rotate(12deg) scaleX(0.72); }
+            60% { transform: translateY(-12px) rotate(4deg) scaleX(1); }
+            85% { transform: translateY(-3px) rotate(9deg) scaleX(0.78); }
+        }
+
+        .butterfly-left {
+            animation: flutterLeft 4.5s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .butterfly-right {
+            animation: flutterRight 5s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        /* Animación de balanceo suave para flores */
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(1.5deg); }
+        }
+        .floral-sway {
+            animation: sway 6s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        /* Sello de cera 3D */
+        .wax-seal {
+            background: radial-gradient(circle at 35% 35%, #E8B4BC, #C98A95 65%, #A66873 100%);
+            box-shadow: 
+                0 8px 20px rgba(166, 104, 115, 0.4),
+                inset 0 2px 5px rgba(255, 255, 255, 0.6),
+                inset 0 -3px 6px rgba(120, 65, 75, 0.5);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .wax-seal:hover {
+            transform: scale(1.07);
+        }
+        .wax-seal:active {
+            transform: scale(0.96);
+        }
+
+        /* Transición de apertura del sobre */
+        .envelope-overlay {
+            transition: opacity 0.9s ease, transform 0.9s ease, visibility 0.9s;
+        }
+        .envelope-opened {
+            opacity: 0;
+            transform: scale(1.06);
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Pétalos flotantes en canvas */
+        #petal-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        /* Efecto de aparición suave */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start relative selection:bg-pink-100 selection:text-ink">
+
+    <!-- Canvas para pétalos y destellos mágicos -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- PANTALLA INICIAL: SOBRE DE INVITACIÓN CON SELLO DE CERA -->
+    <div id="envelope-screen" class="envelope-overlay fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-[#F7F4FA]/95 backdrop-blur-md">
+        <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-pink-100 p-8 sm:p-10 text-center relative overflow-hidden">
+            <!-- Decoración superior sutil -->
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-200 via-pink-200 to-amber-100"></div>
+            
+            <p class="font-serif tracking-[0.25em] text-xs sm:text-sm text-gray-500 uppercase mb-3">
+                Tienes una invitación especial
+            </p>
+            
+            <h2 class="font-script text-5xl sm:text-6xl text-ink mb-2">Marielos</h2>
+            <p class="font-serif tracking-[0.2em] text-xs text-gray-600 uppercase mb-8">
+                Bridal Shower • 05 Dic 2026
+            </p>
+
+            <!-- Botón Sello de Cera Interactivo -->
+            <div class="relative flex flex-col items-center justify-center my-6">
+                <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-pink-200 to-transparent absolute"></div>
+                <button id="open-invitation-btn" aria-label="Abrir invitación" class="wax-seal relative z-10 w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center border-4 border-[#DF9FA9]/60 cursor-pointer focus:outline-none">
+                    <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-full border border-white/40 flex items-center justify-center">
+                        <span class="font-script text-5xl sm:text-6xl text-white drop-shadow-sm select-none">M</span>
+                    </div>
+                </button>
+            </div>
+
+            <p class="font-serif italic text-gray-600 text-sm sm:text-base mt-6 animate-pulse">
+                Toca el sello para abrir tu invitación
+            </p>
+            <p class="text-[11px] text-gray-400 mt-2">
+                <i class="fa-solid fa-music mr-1"></i> Incluye melodía ambiental suave
+            </p>
+        </div>
+    </div>
+
+    <!-- BOTÓN FLOTANTE DE MÚSICA -->
+    <button id="music-toggle" title="Activar o silenciar música" class="fixed top-4 right-4 z-30 bg-white/90 hover:bg-white text-ink border border-pink-200 shadow-md rounded-full w-11 h-11 flex items-center justify-center transition-all duration-300 backdrop-blur-sm">
+        <i id="music-icon" class="fa-solid fa-volume-xmark text-pink-400"></i>
+    </button>
+
+    <!-- CONTENEDOR PRINCIPAL DE LA TARJETA -->
+    <main class="w-full max-w-xl mx-auto my-0 sm:my-8 bg-white/90 shadow-xl sm:rounded-[2rem] border border-purple-100/80 relative overflow-hidden">
+        
+        <!-- Óvalo central sutil replicando la composición de la imagen -->
+        <div class="watercolor-oval rounded-[50%] mx-2 sm:mx-6 mt-4 pt-8 pb-12 px-4 sm:px-8 flex flex-col items-center text-center relative z-10">
+            
+            <!-- 1. Cinta rosa pastel superior -->
+            <div class="ribbon-banner px-8 sm:px-12 py-2.5 mb-5 shadow-xs fade-up">
+                <span class="font-serif text-xs sm:text-sm md:text-base tracking-[0.18em] text-ink font-medium uppercase">
+                    ACOMPÁÑANOS A CELEBRAR
+                </span>
+            </div>
+
+            <!-- 2. Nombre principal en caligrafía oscura elegante -->
+            <h1 class="font-script text-[4.5rem] sm:text-[6rem] md:text-[6.8rem] leading-[0.95] text-ink my-2 select-none fade-up" style="transition-delay: 100ms;">
+                Marielos
+            </h1>
+
+            <!-- 3. Subtítulo BRIDAL SHOWER -->
+            <h2 class="font-serif text-xl sm:text-2xl md:text-[1.7rem] tracking-[0.16em] text-ink font-normal uppercase mt-2 mb-5 fade-up" style="transition-delay: 200ms;">
+                BRIDAL SHOWER
+            </h2>
+
+            <!-- 4. Frase emotiva -->
+            <p class="font-serif text-base sm:text-lg text-ink/90 max-w-xs sm:max-w-sm leading-relaxed mb-7 fade-up" style="transition-delay: 300ms;">
+                Celebremos una vida llena de amor y felicidad.
+            </p>
+
+            <!-- 5. Bloque de Fecha y Hora exacto como en la imagen -->
+            <div class="flex items-center justify-center gap-3 sm:gap-5 my-2 py-2 px-3 fade-up" style="transition-delay: 400ms;">
+                <div class="text-right font-serif">
+                    <div class="text-sm sm:text-base font-semibold tracking-wider uppercase text-ink">SÁBADO</div>
+                    <div class="text-sm sm:text-base font-medium text-ink">8:30 AM</div>
+                </div>
+                
+                <!-- Separador vertical izquierdo -->
+                <div class="w-[1.5px] h-12 bg-ink/80"></div>
+                
+                <!-- Día 05 destacado -->
+                <div class="font-serif text-4xl sm:text-5xl font-bold text-ink tracking-tight px-1">
+                    05
+                </div>
+                
+                <!-- Separador vertical derecho -->
+                <div class="w-[1.5px] h-12 bg-ink/80"></div>
+                
+                <div class="text-left font-serif">
+                    <div class="text-sm sm:text-base font-semibold tracking-wider uppercase text-ink">DICIEMBRE</div>
+                    <div class="text-sm sm:text-base font-medium text-ink">2026</div>
+                </div>
+            </div>
+
+            <!-- 6. Ubicación textual -->
+            <div class="mt-6 mb-4 font-serif text-base sm:text-lg text-ink leading-snug max-w-xs sm:max-w-sm fade-up" style="transition-delay: 500ms;">
+                <p class="font-medium">El Zócalo, San Benito.</p>
+                <p>Bulevar del Hipódromo, San Salvador.</p>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN RÁPIDA (Ubicación y Calendario) -->
+            <div class="flex flex-wrap items-center justify-center gap-2.5 mt-3 mb-2 z-20 fade-up" style="transition-delay: 600ms;">
+                <button onclick="openLocationModal()" class="inline-flex items-center gap-2 bg-[#F5E6E8] hover:bg-[#ecd4d8] text-ink font-serif text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-xs border border-pink-200/70 transition-all cursor-pointer">
+                    <i class="fa-solid fa-location-dot text-rose-500"></i>
+                    <span>Cómo llegar</span>
+                </button>
+
+                <button onclick="openCalendarModal()" class="inline-flex items-center gap-2 bg-purple-50 hover:bg-purple-100 text-ink font-serif text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-xs border border-purple-200/70 transition-all cursor-pointer">
+                    <i class="fa-regular fa-calendar-check text-purple-500"></i>
+                    <span>Agendar fecha</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ILUSTRACIÓN BOTÁNICA EN ACUARELA Y MARIPOSAS ANIMADAS (Replicando la parte inferior de la tarjeta) -->
+        <div class="relative w-full -mt-12 sm:-mt-16 pt-6 pointer-events-none select-none z-10">
+            
+            <!-- Mariposa Morada Izquierda (Interactiva al tocar) -->
+            <div onclick="burstSparkles(event)" class="butterfly-left pointer-events-auto cursor-pointer absolute left-4 sm:left-10 top-2 sm:top-4 w-20 h-20 sm:w-24 sm:h-24 z-20" title="Tócame">
+                <svg viewBox="0 0 120 120" class="w-full h-full drop-shadow-sm">
+                    <defs>
+                        <radialGradient id="purpleWing" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#E6D7FF"/>
+                            <stop offset="55%" stop-color="#B99CE8"/>
+                            <stop offset="100%" stop-color="#8B6CC4"/>
+                        </radialGradient>
+                        <radialGradient id="purpleWingLower" cx="40%" cy="40%" r="70%">
+                            <stop offset="0%" stop-color="#F2E6FF"/>
+                            <stop offset="70%" stop-color="#C8ADEF"/>
+                            <stop offset="100%" stop-color="#9A7CD1"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- Ala superior -->
+                    <path d="M55,65 C25,20 5,30 15,62 C22,82 42,78 55,68 Z" fill="url(#purpleWing)" opacity="0.88"/>
+                    <!-- Ala inferior -->
+                    <path d="M56,68 C32,75 28,105 52,102 C68,100 66,80 58,70 Z" fill="url(#purpleWingLower)" opacity="0.85"/>
+                    <!-- Nervaduras sutiles -->
+                    <path d="M54,66 Q32,48 18,45 M54,67 Q30,60 20,62 M56,70 Q44,88 45,98" stroke="#7A5BA8" stroke-width="0.8" fill="none" opacity="0.45"/>
+                    <!-- Cuerpo -->
+                    <ellipse cx="58" cy="66" rx="2.2" ry="12" transform="rotate(-32 58 66)" fill="#5A4578"/>
+                    <path d="M52,56 Q44,45 40,46 M54,55 Q50,42 47,42" stroke="#5A4578" stroke-width="1" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- Mariposa Rosa Derecha (Interactiva al tocar) -->
+            <div onclick="burstSparkles(event)" class="butterfly-right pointer-events-auto cursor-pointer absolute right-4 sm:right-10 top-0 sm:top-2 w-20 h-20 sm:w-24 sm:h-24 z-20" title="Tócame">
+                <svg viewBox="0 0 120 120" class="w-full h-full drop-shadow-sm">
+                    <defs>
+                        <radialGradient id="pinkWing" cx="70%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#FFE3EC"/>
+                            <stop offset="55%" stop-color="#F7A8C4"/>
+                            <stop offset="100%" stop-color="#E07A9E"/>
+                        </radialGradient>
+                        <radialGradient id="pinkWingLower" cx="60%" cy="40%" r="70%">
+                            <stop offset="0%" stop-color="#FFF0F5"/>
+                            <stop offset="70%" stop-color="#F9BDD2"/>
+                            <stop offset="100%" stop-color="#E389A9"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- Ala superior derecha -->
+                    <path d="M62,65 C92,18 114,28 104,60 C97,80 77,77 62,68 Z" fill="url(#pinkWing)" opacity="0.88"/>
+                    <!-- Ala inferior derecha -->
+                    <path d="M61,68 C85,75 89,105 65,102 C49,100 51,80 59,70 Z" fill="url(#pinkWingLower)" opacity="0.85"/>
+                    <!-- Nervaduras -->
+                    <path d="M63,66 Q85,48 99,45 M63,67 Q87,60 97,62 M61,70 Q73,88 72,98" stroke="#C45C82" stroke-width="0.8" fill="none" opacity="0.45"/>
+                    <!-- Cuerpo -->
+                    <ellipse cx="59" cy="66" rx="2.2" ry="12" transform="rotate(32 59 66)" fill="#7D495C"/>
+                    <path d="M65,56 Q73,45 77,46 M63,55 Q67,42 70,42" stroke="#7D495C" stroke-width="1" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- Jardín Inferior de Flores Silvestres en Acuarela (SVG ilustrado) -->
+            <svg viewBox="0 0 600 210" class="w-full h-auto block floral-sway" preserveAspectRatio="xMidYMax slice">
+                <defs>
+                    <filter id="watercolorBlur" x="-10%" y="-10%" width="120%" height="120%">
+                        <feGaussianBlur stdDeviation="1.2" />
+                    </filter>
+                </defs>
+
+                <!-- Tallos y hojas de eucalipto / follaje verde acuarela -->
+                <g stroke="#7D9D74" stroke-width="2.2" fill="none" opacity="0.85">
+                    <path d="M35,210 Q30,130 22,55" />
+                    <path d="M85,210 Q80,145 70,85" />
+                    <path d="M140,210 Q145,140 165,75" />
+                    <path d="M215,210 Q210,150 200,95" />
+                    <path d="M285,210 Q290,145 305,85" />
+                    <path d="M355,210 Q365,140 390,70" />
+                    <path d="M435,210 Q430,145 420,90" />
+                    <path d="M505,210 Q515,135 535,65" />
+                    <path d="M568,210 Q572,125 580,50" />
+                </g>
+
+                <!-- Hojas verdes suaves -->
+                <g fill="#8FB085" opacity="0.75">
+                    <ellipse cx="25" cy="140" rx="14" ry="6" transform="rotate(-35 25 140)"/>
+                    <ellipse cx="42" cy="120" rx="14" ry="6" transform="rotate(30 42 120)"/>
+                    <ellipse cx="155" cy="125" rx="12" ry="7" transform="rotate(-25 155 125)"/>
+                    <ellipse cx="172" cy="105" rx="11" ry="7" transform="rotate(25 172 105)"/>
+                    <ellipse cx="160" cy="88" rx="10" ry="6" transform="rotate(-20 160 88)"/>
+                    <ellipse cx="345" cy="145" rx="15" ry="6" transform="rotate(-40 345 145)"/>
+                    <ellipse cx="520" cy="135" rx="14" ry="6" transform="rotate(35 520 135)"/>
+                    <ellipse cx="565" cy="110" rx="13" ry="6" transform="rotate(-30 565 110)"/>
+                </g>
+
+                <!-- Flores Amarillas Suaves -->
+                <g transform="translate(65, 115)" opacity="0.9">
+                    <circle cx="0" cy="-12" r="9" fill="#FCE694"/>
+                    <circle cx="11" cy="-4" r="9" fill="#FBE082"/>
+                    <circle cx="7" cy="10" r="9" fill="#FCE694"/>
+                    <circle cx="-7" cy="10" r="9" fill="#FBE082"/>
+                    <circle cx="-11" cy="-4" r="9" fill="#FCE694"/>
+                    <circle cx="0" cy="0" r="5" fill="#E5A93B"/>
+                </g>
+                <g transform="translate(465, 130) scale(0.9)" opacity="0.9">
+                    <circle cx="0" cy="-12" r="9" fill="#FCE694"/>
+                    <circle cx="11" cy="-4" r="9" fill="#FBE082"/>
+                    <circle cx="7" cy="10" r="9" fill="#FCE694"/>
+                    <circle cx="-7" cy="10" r="9" fill="#FBE082"/>
+                    <circle cx="-11" cy="-4" r="9" fill="#FCE694"/>
+                    <circle cx="0" cy="0" r="5" fill="#E5A93B"/>
+                </g>
+                <g transform="translate(120, 175) scale(0.85)" opacity="0.88">
+                    <circle cx="0" cy="-12" r="9" fill="#FCE694"/>
+                    <circle cx="11" cy="-4" r="9" fill="#FBE082"/>
+                    <circle cx="7" cy="10" r="9" fill="#FCE694"/>
+                    <circle cx="-7" cy="10" r="9" fill="#FBE082"/>
+                    <circle cx="-11" cy="-4" r="9" fill="#FCE694"/>
+                    <circle cx="0" cy="0" r="5" fill="#E5A93B"/>
+                </g>
+
+                <!-- Flores Rosa Pastel (Lirios/Orquídeas acuarela) -->
+                <g transform="translate(75, 155)" opacity="0.88">
+                    <ellipse cx="0" cy="-14" rx="8" ry="15" fill="#F5B5C8"/>
+                    <ellipse cx="14" cy="-3" rx="15" ry="8" fill="#F2A2BA"/>
+                    <ellipse cx="9" cy="12" rx="9" ry="14" transform="rotate(30 9 12)" fill="#F7C4D4"/>
+                    <ellipse cx="-9" cy="12" rx="9" ry="14" transform="rotate(-30 -9 12)" fill="#F2A2BA"/>
+                    <ellipse cx="-14" cy="-3" rx="15" ry="8" fill="#F5B5C8"/>
+                    <circle cx="0" cy="0" r="5" fill="#D96B8A"/>
+                </g>
+                <g transform="translate(265, 175) scale(1.05)" opacity="0.9">
+                    <ellipse cx="0" cy="-14" rx="8" ry="15" fill="#F5B5C8"/>
+                    <ellipse cx="14" cy="-3" rx="15" ry="8" fill="#F2A2BA"/>
+                    <ellipse cx="9" cy="12" rx="9" ry="14" transform="rotate(30 9 12)" fill="#F7C4D4"/>
+                    <ellipse cx="-9" cy="12" rx="9" ry="14" transform="rotate(-30 -9 12)" fill="#F2A2BA"/>
+                    <ellipse cx="-14" cy="-3" rx="15" ry="8" fill="#F5B5C8"/>
+                    <circle cx="0" cy="0" r="5" fill="#D96B8A"/>
+                </g>
+                <g transform="translate(525, 150)" opacity="0.88">
+                    <ellipse cx="0" cy="-14" rx="8" ry="15" fill="#F5B5C8"/>
+                    <ellipse cx="14" cy="-3" rx="15" ry="8" fill="#F2A2BA"/>
+                    <ellipse cx="9" cy="12" rx="9" ry="14" transform="rotate(30 9 12)" fill="#F7C4D4"/>
+                    <ellipse cx="-9" cy="12" rx="9" ry="14" transform="rotate(-30 -9 12)" fill="#F2A2BA"/>
+                    <ellipse cx="-14" cy="-3" rx="15" ry="8" fill="#F5B5C8"/>
+                    <circle cx="0" cy="0" r="5" fill="#D96B8A"/>
+                </g>
+
+                <!-- Espigas de Lavanda / Flores Moradas -->
+                <g fill="#B39CD0" opacity="0.85">
+                    <circle cx="205" cy="110" r="6"/><circle cx="215" cy="122" r="7"/><circle cx="200" cy="132" r="7"/>
+                    <circle cx="218" cy="142" r="8"/><circle cx="204" cy="152" r="8"/><circle cx="215" cy="165" r="7"/>
+                    <circle cx="305" cy="105" r="5" fill="#E08DAC"/><circle cx="312" cy="120" r="6" fill="#E08DAC"/>
+                    <circle cx="298" cy="132" r="7" fill="#E08DAC"/><circle cx="310" cy="145" r="7" fill="#E08DAC"/>
+                </g>
+
+                <!-- Flores Azul Claro / Campanillas -->
+                <g fill="#89B4E5" opacity="0.88">
+                    <circle cx="395" cy="95" r="6"/><circle cx="408" cy="108" r="7"/><circle cx="390" cy="118" r="7"/>
+                    <circle cx="405" cy="132" r="8"/><circle cx="392" cy="145" r="7"/>
+                    <!-- Ramo azul inferior derecho -->
+                    <circle cx="445" cy="165" r="8" fill="#769FDB"/><circle cx="460" cy="175" r="9" fill="#89B4E5"/>
+                    <circle cx="435" cy="182" r="8" fill="#769FDB"/><circle cx="452" cy="192" r="8" fill="#688EC9"/>
+                </g>
+
+                <!-- Capullos rosados en los tallos altos laterales -->
+                <g fill="#F4C2C2" opacity="0.85">
+                    <ellipse cx="22" cy="65" rx="5" ry="8"/><ellipse cx="30" cy="82" rx="5" ry="8"/><ellipse cx="20" cy="98" rx="6" ry="8"/>
+                    <ellipse cx="578" cy="60" rx="5" ry="8"/><ellipse cx="568" cy="78" rx="5" ry="8"/><ellipse cx="576" cy="95" rx="6" ry="8"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- SECCIÓN INTERACTIVA INFERIOR (Cuenta regresiva, RSVP y Libro de Deseos) -->
+        <section class="bg-gradient-to-b from-[#F9F6FC] to-white px-5 sm:px-8 py-8 border-t border-purple-100/80">
+            
+            <!-- CUENTA REGRESIVA EN TIEMPO REAL -->
+            <div class="text-center mb-8">
+                <p class="font-serif text-xs sm:text-sm tracking-[0.2em] uppercase text-gray-500 mb-3">
+                    Falta muy poco para celebrar juntas
+                </p>
+                <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-sm mx-auto">
+                    <div class="bg-white rounded-2xl p-2.5 sm:p-3 shadow-xs border border-pink-100">
+                        <span id="cd-days" class="block font-serif text-2xl sm:text-3xl font-bold text-ink">00</span>
+                        <span class="text-[11px] font-serif uppercase tracking-wider text-gray-500">Días</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-2.5 sm:p-3 shadow-xs border border-purple-100">
+                        <span id="cd-hours" class="block font-serif text-2xl sm:text-3xl font-bold text-ink">00</span>
+                        <span class="text-[11px] font-serif uppercase tracking-wider text-gray-500">Horas</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-2.5 sm:p-3 shadow-xs border border-pink-100">
+                        <span id="cd-minutes" class="block font-serif text-2xl sm:text-3xl font-bold text-ink">00</span>
+                        <span class="text-[11px] font-serif uppercase tracking-wider text-gray-500">Min</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-2.5 sm:p-3 shadow-xs border border-purple-100">
+                        <span id="cd-seconds" class="block font-serif text-2xl sm:text-3xl font-bold text-rose-400">00</span>
+                        <span class="text-[11px] font-serif uppercase tracking-wider text-gray-500">Seg</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTÓN PRINCIPAL DE CONFIRMACIÓN (RSVP) -->
+            <div class="text-center mb-8">
+                <button onclick="openRsvpModal()" class="w-full sm:w-auto bg-gradient-to-r from-[#E6B8C2] via-[#DFACBA] to-[#CDB8E2] hover:opacity-95 text-ink font-serif font-semibold tracking-wider uppercase text-sm px-8 py-4 rounded-full shadow-md transition-all transform hover:-translate-y-0.5 cursor-pointer">
+                    <i class="fa-solid fa-envelope-open-text mr-2"></i>
+                    Confirmar Asistencia y Dejar Deseo
+                </button>
+            </div>
+
+            <!-- MURO DE DESEOS PARA MARIELOS -->
+            <div class="bg-white/80 rounded-2xl p-5 border border-purple-100/80 shadow-xs">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-serif text-base sm:text-lg font-semibold text-ink flex items-center gap-2">
+                        <i class="fa-solid fa-heart text-pink-400 text-sm"></i>
+                        Buenos deseos para Marielos
+                    </h3>
+                    <span id="wishes-count" class="text-xs font-serif bg-pink-50 text-rose-600 px-2.5 py-1 rounded-full border border-pink-100">
+                        3 mensajes
+                    </span>
+                </div>
+
+                <div id="wishes-list" class="space-y-3 max-h-60 overflow-y-auto pr-1">
+                    <!-- Deseos iniciales de ejemplo -->
+                    <div class="bg-[#FAF8FC] p-3.5 rounded-xl border border-purple-100/60">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-serif font-semibold text-sm text-ink">Sofía & Valería</span>
+                            <span class="text-[11px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">Confirmada</span>
+                        </div>
+                        <p class="font-serif italic text-xs sm:text-sm text-gray-600">
+                            "¡Qué emoción celebrar esta etapa tan hermosa contigo, Marielos! Nos vemos el sábado para brindar por tu felicidad."
+                        </p>
+                    </div>
+                    <div class="bg-[#FAF8FC] p-3.5 rounded-xl border border-purple-100/60">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-serif font-semibold text-sm text-ink">Camila Martínez</span>
+                            <span class="text-[11px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">Confirmada</span>
+                        </div>
+                        <p class="font-serif italic text-xs sm:text-sm text-gray-600">
+                            "Te deseo un matrimonio lleno de bendiciones, risas y amor infinito. ¡Ahí estaré puntual!"
+                        </p>
+                    </div>
+                    <div class="bg-[#FAF8FC] p-3.5 rounded-xl border border-purple-100/60">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-serif font-semibold text-sm text-ink">Andrea López</span>
+                            <span class="text-[11px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">Confirmada</span>
+                        </div>
+                        <p class="font-serif italic text-xs sm:text-sm text-gray-600">
+                            "¡Felicidades futura novia! Será una mañana inolvidable en El Zócalo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pie de página -->
+            <footer class="text-center mt-6 pt-4 border-t border-gray-100">
+                <p class="font-script text-2xl text-gray-500">Marielos • Bridal Shower</p>
+                <p class="font-serif text-[11px] text-gray-400 mt-1">Sábado 05 de Diciembre, 2026 • San Salvador</p>
+            </footer>
+        </section>
+    </main>
+
+    <!-- MODAL 1: UBICACIÓN INTERACTIVA -->
+    <div id="location-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-pink-100 relative animate-fadeIn">
+            <button onclick="closeModal('location-modal')" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-5">
+                <div class="w-12 h-12 bg-pink-50 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-ink">Ubicación del Evento</h3>
+                <p class="font-serif text-sm text-gray-600 mt-1">El Zócalo, San Benito</p>
+                <p class="font-serif text-xs text-gray-500">Bulevar del Hipódromo, San Salvador</p>
+            </div>
+
+            <!-- Mapa ilustrativo estilizado -->
+            <div class="bg-[#F6F3FA] rounded-2xl p-4 mb-5 border border-purple-100 text-center">
+                <p class="font-serif text-xs text-gray-600 mb-3">
+                    <i class="fa-solid fa-clock text-purple-400 mr-1"></i> Recepción: <strong>Sábado 5 de diciembre • 8:30 AM</strong>
+                </p>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="https://www.google.com/maps/search/?api=1&query=El+Zocalo+San+Benito+Bulevar+del+Hipodromo+San+Salvador" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center bg-white hover:bg-pink-50/60 p-3.5 rounded-xl border border-gray-200 shadow-2xs transition">
+                        <i class="fa-solid fa-map-location-dot text-2xl text-rose-500 mb-1.5"></i>
+                        <span class="font-serif text-xs font-semibold text-ink">Google Maps</span>
+                    </a>
+                    <a href="https://waze.com/ul?q=El%20Zocalo%20San%20Benito%20San%20Salvador&navigate=yes" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center bg-white hover:bg-sky-50/60 p-3.5 rounded-xl border border-gray-200 shadow-2xs transition">
+                        <i class="fa-brands fa-waze text-2xl text-sky-500 mb-1.5"></i>
+                        <span class="font-serif text-xs font-semibold text-ink">Abrir en Waze</span>
+                    </a>
+                </div>
+            </div>
+
+            <button onclick="copyAddress()" class="w-full py-2.5 px-4 rounded-full bg-gray-100 hover:bg-gray-200 font-serif text-xs text-ink flex items-center justify-center gap-2 transition cursor-pointer">
+                <i class="fa-regular fa-copy"></i>
+                <span id="copy-addr-text">Copiar dirección exacta</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: AGREGAR AL CALENDARIO -->
+    <div id="calendar-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-purple-100 relative">
+            <button onclick="closeModal('calendar-modal')" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-5">
+                <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-regular fa-calendar-check"></i>
+                </div>
+                <h3 class="font-serif text-xl font-bold text-ink">Agendar Fecha</h3>
+                <p class="font-serif text-sm text-gray-600 mt-1">Sábado 05 de Diciembre, 2026 • 8:30 AM</p>
+            </div>
+
+            <div class="space-y-3">
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Bridal+Shower+de+Marielos&dates=20261205T143000Z/20261205T173000Z&details=Celebremos+una+vida+llena+de+amor+y+felicidad.+Bridal+Shower+de+Marielos.&location=El+Z%C3%B3calo,+San+Benito,+Bulevar+del+Hip%C3%B3dromo,+San+Salvador" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-3 bg-[#F5E6E8] hover:bg-[#ebd5d8] text-ink font-serif text-sm font-medium py-3.5 px-4 rounded-2xl transition">
+                    <i class="fa-brands fa-google text-rose-500"></i>
+                    <span>Guardar en Google Calendar</span>
+                </a>
+
+                <button onclick="downloadICS()" class="w-full flex items-center justify-center gap-3 bg-purple-50 hover:bg-purple-100 text-ink font-serif text-sm font-medium py-3.5 px-4 rounded-2xl transition cursor-pointer">
+                    <i class="fa-brands fa-apple text-purple-600"></i>
+                    <span>Descargar archivo .ICS (Apple / Outlook)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: CONFIRMACIÓN DE ASISTENCIA (RSVP) Y DESEOS -->
+    <div id="rsvp-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-pink-100 relative max-h-[92vh] overflow-y-auto">
+            <button onclick="closeModal('rsvp-modal')" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-5">
+                <h3 class="font-script text-4xl text-ink">Confirmar Asistencia</h3>
+                <p class="font-serif text-xs text-gray-500 mt-1">Por favor confirma tu presencia para el Bridal Shower de Marielos</p>
+            </div>
+
+            <form id="rsvp-form" onsubmit="handleRsvpSubmit(event)" class="space-y-4 font-serif">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Tu nombre completo *</label>
+                    <input type="text" id="guest-name" required placeholder="Ej. María José Hernández" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-pink-300 focus:outline-none text-sm bg-[#FAF9FC]">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">¿Asistirás? *</label>
+                        <select id="guest-status" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-pink-300 focus:outline-none text-sm bg-[#FAF9FC]">
+                            <option value="Confirmada">¡Sí, ahí estaré!</option>
+                            <option value="No podré asistir">No podré asistir</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Personas</label>
+                        <select id="guest-count" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:border-pink-300 focus:outline-none text-sm bg-[#FAF9FC]">
+                            <option value="1">1 persona</option>
+                            <option value="2">2 personas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Restricción alimenticia o alergia (opcional)</label>
+                    <input type="text" id="guest-diet" placeholder="Ej. Ninguna, vegetariana, sin gluten..." class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-pink-300 focus:outline-none text-sm bg-[#FAF9FC]">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Mensaje o deseo para Marielos *</label>
+                    <textarea id="guest-message" required rows="3" placeholder="Escribe unas lindas palabras para la futura novia..." class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-pink-300 focus:outline-none text-sm bg-[#FAF9FC]"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-[#E6B8C2] to-[#CDB8E2] hover:opacity-95 text-ink font-semibold py-3.5 rounded-full shadow-md transition cursor-pointer text-sm">
+                    Enviar Confirmación y Deseo
+                </button>
+            </form>
+
+            <!-- Vista posterior al envío con opción de compartir por WhatsApp -->
+            <div id="rsvp-success" class="hidden text-center py-4 space-y-4">
+                <div class="w-14 h-14 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto text-2xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h4 class="font-serif text-lg font-bold text-ink">¡Gracias por confirmar!</h4>
+                <p class="font-serif text-xs text-gray-600">Tu mensaje ha sido añadido al muro de deseos de Marielos.</p>
+                
+                <div class="pt-2 space-y-2.5">
+                    <a id="whatsapp-share-link" href="#" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-serif text-sm font-medium py-3 px-4 rounded-full shadow-sm transition">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Enviar confirmación por WhatsApp</span>
+                    </a>
+                    <button onclick="resetRsvpModal()" class="w-full py-2 text-xs font-serif text-gray-500 hover:text-ink underline cursor-pointer">
+                        Cerrar ventana
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST FLOTANTE -->
+    <div id="toast-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-ink text-white font-serif text-xs sm:text-sm px-5 py-3 rounded-full shadow-xl opacity-0 pointer-events-none transition-opacity duration-300">
+        Mensaje copiado
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. SINTETIZADOR DE MÚSICA AMBIENTAL SUAVE (Web Audio API)
+        // ==========================================
+        let audioCtx = null;
+        let isPlaying = false;
+        let musicInterval = null;
+
+        function startAmbientMusic() {
+            if (isPlaying) return;
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!audioCtx) {
+                    audioCtx = new AudioContext();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                // Acordes arpegiados suaves en Fa Mayor / Re menor romántico (estilo caja musical / arpa)
+                const notes = [
+                    349.23, 440.00, 523.25, 659.25, // Fmaj7
+                    293.66, 349.23, 440.00, 523.25, // Dm7
+                    233.08, 349.23, 440.00, 587.33, // Bbmaj7
+                    261.63, 392.00, 493.88, 587.33  // Csus
+                ];
+                let step = 0;
+
+                const playNote = () => {
+                    if (!isPlaying || !audioCtx) return;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
+                    
+                    // Envolvente suave tipo arpa
+                    gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.045, audioCtx.currentTime + 0.12);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.2);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 2.3);
+                    step++;
+                };
+
+                isPlaying = true;
+                updateMusicIcon();
+                playNote();
+                musicInterval = setInterval(playNote, 750);
+            } catch (e) {
+                console.warn("Audio no disponible:", e);
+            }
+        }
+
+        function stopAmbientMusic() {
+            isPlaying = false;
+            if (musicInterval) {
+                clearInterval(musicInterval);
+                musicInterval = null;
+            }
+            updateMusicIcon();
+        }
+
+        function updateMusicIcon() {
+            const icon = document.getElementById('music-icon');
+            if (isPlaying) {
+                icon.className = 'fa-solid fa-volume-high text-rose-500';
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-gray-400';
+            }
+        }
+
+        document.getElementById('music-toggle').addEventListener('click', () => {
+            if (isPlaying) {
+                stopAmbientMusic();
+            } else {
+                startAmbientMusic();
+            }
+        });
+
+        // ==========================================
+        // 2. APERTURA DEL SOBRE Y ANIMACIONES DE ENTRADA
+        // ==========================================
+        document.getElementById('open-invitation-btn').addEventListener('click', () => {
+            const envelope = document.getElementById('envelope-screen');
+            envelope.classList.add('envelope-opened');
+            
+            // Iniciar música ambiental suave
+            startAmbientMusic();
+            
+            // Activar animaciones de texto
+            setTimeout(() => {
+                document.querySelectorAll('.fade-up').forEach(el => {
+                    el.classList.add('visible');
+                });
+                // Lluvia inicial de pétalos
+                for (let i = 0; i < 24; i++) {
+                    spawnPetal(Math.random() * window.innerWidth, -20 - Math.random() * 150);
+                }
+            }, 300);
+        });
+
+        // ==========================================
+        // 3. PARTÍCULAS Y PÉTALOS EN ACUARELA (CANVAS)
+        // ==========================================
+        const canvas = document.getElementById('petal-canvas');
+        const ctx = canvas.getContext('2d');
+        let petals = [];
+        const petalColors = ['#F5B5C8', '#C3B1E1', '#FCE694', '#A7C7E7', '#F8D3DF'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function spawnPetal(x, y, burst = false) {
+            petals.push({
+                x: x,
+                y: y,
+                size: Math.random() * 6 + 4,
+                speedY: burst ? (Math.random() - 0.5) * 4 : Math.random() * 1.1 + 0.4,
+                speedX: burst ? (Math.random() - 0.5) * 4 : (Math.random() - 0.5) * 0.8,
+                rotation: Math.random() * 360,
+                rotSpeed: (Math.random() - 0.5) * 2,
+                color: petalColors[Math.floor(Math.random() * petalColors.length)],
+                alpha: Math.random() * 0.5 + 0.4,
+                life: burst ? 90 : 600
+            });
+        }
+
+        function burstSparkles(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            for (let i = 0; i < 16; i++) {
+                spawnPetal(cx, cy, true);
+            }
+            showToast("✨ ¡Un deseo mágico para Marielos!");
+        }
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Generar ocasionalmente un pétalo suave cayendo
+            if (Math.random() < 0.04 && petals.length < 35) {
+                spawnPetal(Math.random() * canvas.width, -10);
+            }
+
+            for (let i = petals.length - 1; i >= 0; i--) {
+                const p = petals[i];
+                p.x += p.speedX + Math.sin(p.y * 0.02) * 0.3;
+                p.y += p.speedY;
+                p.rotation += p.rotSpeed;
+                p.life--;
+
+                if (p.y > canvas.height + 20 || p.life <= 0) {
+                    petals.splice(i, 1);
+                    continue;
+                }
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.globalAlpha = Math.min(p.alpha, p.life / 40);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            requestAnimationFrame(animatePetals);
+        }
+
+        // ==========================================
+        // 4. CUENTA REGRESIVA (Sábado 5 Dic 2026, 8:30 AM GMT-6 El Salvador)
+        // ==========================================
+        const eventDate = new Date('2026-12-05T08:30:00-06:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance <= 0) {
+                document.getElementById('cd-days').textContent = '00';
+                document.getElementById('cd-hours').textContent = '00';
+                document.getElementById('cd-minutes').textContent = '00';
+                document.getElementById('cd-seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // ==========================================
+        // 5. MODALES, CALENDARIO .ICS Y COPIADO
+        // ==========================================
+        function openLocationModal() {
+            const m = document.getElementById('location-modal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function openCalendarModal() {
+            const m = document.getElementById('calendar-modal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function openRsvpModal() {
+            const m = document.getElementById('rsvp-modal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function closeModal(id) {
+            const m = document.getElementById(id);
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-box');
+            toast.textContent = msg;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, 2800);
+        }
+
+        function copyAddress() {
+            const address = "El Zócalo, San Benito. Bulevar del Hipódromo, San Salvador.";
+            const tempInput = document.createElement("textarea");
+            tempInput.value = address;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            showToast("📍 Dirección copiada al portapapeles");
+        }
+
+        function downloadICS() {
+            const icsContent = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "PRODID:-//Bridal Shower Marielos//ES",
+                "BEGIN:VEVENT",
+                "UID:bridal-shower-marielos-20261205@invitacion.sv",
+                "DTSTAMP:20261114T120000Z",
+                "DTSTART:20261205T143000Z",
+                "DTEND:20261205T173000Z",
+                "SUMMARY:Bridal Shower de Marielos",
+                "DESCRIPTION:Celebremos una vida llena de amor y felicidad. Bridal Shower de Marielos.",
+                "LOCATION:El Zócalo, San Benito. Bulevar del Hipódromo, San Salvador.",
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\r\n");
+
+            const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", "Bridal_Shower_Marielos.ics");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("📅 Evento descargado para tu calendario");
+        }
+
+        // ==========================================
+        // 6. CONFIRMACIÓN RSVP Y MURO DE DESEOS
+        // ==========================================
+        let wishCounter = 3;
+
+        function handleRsvpSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('guest-name').value.trim();
+            const status = document.getElementById('guest-status').value;
+            const count = document.getElementById('guest-count').value;
+            const diet = document.getElementById('guest-diet').value.trim();
+            const message = document.getElementById('guest-message').value.trim();
+
+            if (!name || !message) return;
+
+            // Agregar deseo al muro interactivo
+            const wishesList = document.getElementById('wishes-list');
+            const badgeClass = status === 'Confirmada' 
+                ? 'text-emerald-600 bg-emerald-50' 
+                : 'text-amber-600 bg-amber-50';
+
+            const newCard = document.createElement('div');
+            newCard.className = 'bg-pink-50/40 p-3.5 rounded-xl border border-pink-200/70 transition-all';
+            newCard.innerHTML = `
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-serif font-semibold text-sm text-ink">${escapeHTML(name)}</span>
+                    <span class="text-[11px] ${badgeClass} px-2 py-0.5 rounded-full">${escapeHTML(status)}</span>
+                </div>
+                <p class="font-serif italic text-xs sm:text-sm text-gray-700">"${escapeHTML(message)}"</p>
+            `;
+            wishesList.prepend(newCard);
+
+            wishCounter++;
+            document.getElementById('wishes-count').textContent = `${wishCounter} mensajes`;
+
+            // Preparar enlace de WhatsApp
+            const waText = `¡Hola! Confirmo mi respuesta para el *Bridal Shower de Marielos* (Sábado 05 de Dic, 8:30 AM en El Zócalo):%0A%0A` +
+                `👤 *Nombre:* ${encodeURIComponent(name)}%0A` +
+                `✨ *Asistencia:* ${encodeURIComponent(status)} (${count} pers.)%0A` +
+                (diet ? `🍽️ *Nota alimenticia:* ${encodeURIComponent(diet)}%0A` : '') +
+                `💌 *Deseo:* "${encodeURIComponent(message)}"`;
+
+            document.getElementById('whatsapp-share-link').href = `https://wa.me/?text=${waText}`;
+
+            // Cambiar vista en el modal
+            document.getElementById('rsvp-form').classList.add('hidden');
+            document.getElementById('rsvp-success').classList.remove('hidden');
+
+            // Celebración con pétalos
+            for (let i = 0; i < 20; i++) {
+                spawnPetal(window.innerWidth / 2, window.innerHeight / 2, true);
+            }
+        }
+
+        function resetRsvpModal() {
+            document.getElementById('rsvp-form').reset();
+            document.getElementById('rsvp-form').classList.remove('hidden');
+            document.getElementById('rsvp-success').classList.add('hidden');
+            closeModal('rsvp-modal');
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag]));
+        }
+
+        // Iniciar animación del canvas al cargar ventana
+        window.onload = function() {
+            animatePetals();
+        };
+    </script>
+</body>
+</html>
